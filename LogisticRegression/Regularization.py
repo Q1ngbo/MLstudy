@@ -79,7 +79,7 @@ if __name__ == '__main__':
     print("Cost: {}".format(costReg(theta,X,y,learningRate)))
 
     res = opt.fmin_tnc(func=costReg, x0=theta, fprime=gradientReg, args=[X, y, learningRate])
-
+    print(res)
     theta_min = res[0]
 
     predictions = predict(X, theta_min)
