@@ -3,32 +3,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def computeCost(X, y, theta):
-    m = len(y)
-    J = np.sum((X.dot(theta.T) -y)**2)/(2*m)
+def computeLoss(X, y, theta):
+    m = X.shape[0]
+    J = 0
 
-    return J
+    #    return J
+    inner = np.dot((np.dot(X, theta.T) - y).T, (np.dot(X, theta.T) - y))
+    return np.sum(inner) / (2 * X.shape[0])
 
 
-def gradientDescent(X, y, theta, alpha, iters):
-    temp = np.zeros(theta.shape)
-    times = theta.shape[1]
-    m = len(y)
+
+def gradientDescent(X, y, theta, iterations, alpha):
+    m = y.size
     J_history = []
+    thetaNum = theta.shape[1]
+    tempTheta = np.zeros(theta.shape)
 
-    for i in range(iters):
-        error = X.dot(theta.T) - y
-        for k in range(times):
-            x = X[:,k].reshape((47,1))
-            sub =   np.multiply(error, x)
-            # term = np.multiply(error, X[:, k].reshape((47,1)))
-            # temp[0, k] = theta[0, k] - ((alpha / len(X)) * np.sum(term))
-            term = theta[0][k] - (alpha / m) *np.sum(sub)
-            temp[0][k] = term
+    for ite in range(iterations):
+        #         temp0 = theta[0, 0] - alpha*np.sum(X.dot(theta.T) - y)/m
+        #         temp1 = theta[0, 1] - alpha*np.sum((X.dot(theta.T) - y)*X[:,1])/m
 
-        theta = temp
+        for i in range(thetaNum):
+            tempTheta[0, i] = theta[0, i] - (alpha / m) * np.sum((np.dot(X, theta.T) - y) * np.array(X[:, i]).reshape(m, 1))
 
-        J_history.append(computeCost(X, y, theta))
+        theta = tempTheta
+        J_history.append(computeLoss(X, y, theta))
 
     return theta, J_history
 
@@ -53,6 +52,6 @@ if __name__ == '__main__':
     y = np.array(y)
 
 
-    t, Js = gradientDescent(X, y, theta, 0.01, 1500)
+    t, Js = gradientDescent(X, y, theta, 1500, 0.01)
     # gradientDescent(X, y, theta, 0.01, 1500)
-    print(computeCost(X,y,t))
+    print(computeLoss(X,y,t))

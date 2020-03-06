@@ -67,6 +67,7 @@ if __name__ == '__main__':
     alpha = 0.01
     iters = 1000
     g, cost = GradientDescent(X, y, theta, alpha, iters)
+    print(g)
 
     # 效果图
     x = np.linspace(data.Population.min(), data.Population.max(), 100)
@@ -88,3 +89,6 @@ if __name__ == '__main__':
     ax.set_ylabel('Cost')
     ax.set_title('Error vs. Training Epoch')
     plt.show()
+
+
+# better Version
