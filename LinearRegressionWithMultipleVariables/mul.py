@@ -12,7 +12,6 @@ def computeLoss(X, y, theta):
     return np.sum(inner) / (2 * X.shape[0])
 
 
-
 def gradientDescent(X, y, theta, iterations, alpha):
     m = y.size
     J_history = []
@@ -33,7 +32,7 @@ def gradientDescent(X, y, theta, iterations, alpha):
 
 
 if __name__ == '__main__':
-    data = pd.read_csv('ex1data2.txt', names=['Size', 'Bedrooms', 'Price'])
+    data = pd.read_csv('maison.txt', names=['Size', 'Price'])
 
     sizeStd = data.Size.std()
     sizeMean = data.Size.mean()
@@ -47,11 +46,14 @@ if __name__ == '__main__':
     columns = data.shape[1]
     X = data.iloc[:, 0:columns - 1]
     y = data.iloc[:, columns - 1:columns]
-    theta = np.zeros((1, 3))
+    theta = np.zeros((1, 2))
     X = np.array(X)
     y = np.array(y)
 
+    print(X.shape)
+    print(y.shape)
 
     t, Js = gradientDescent(X, y, theta, 1500, 0.01)
+    print(t)
     # gradientDescent(X, y, theta, 0.01, 1500)
     print(computeLoss(X,y,t))
