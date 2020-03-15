@@ -8,7 +8,7 @@ def count_dist(x1, x2):
 
     x1  = np.array(x1)
     x2  = np.array(x2)
-    return np.sqrt(np.sum((x1 - x2) ** 2))
+    return np.sqrt(np.sum(np.square(x1 - x2)))
 
 def find_neighbors(x1, X, epl):
     neigbhors = []
@@ -44,9 +44,9 @@ def dbscan(X, epl, minPts):
                 if p not in visited:
                     visited.append(p)
                     gama.remove(p)
+                    clu.append(p)
                     reach_nighbors = find_neighbors(p, X, epl)
                     if len(reach_nighbors) >= minPts:
-                        clu.append(p)
                         for p1 in reach_nighbors:
                             if p1 not in neighborPoints:
                                 neighborPoints.append(p1)
