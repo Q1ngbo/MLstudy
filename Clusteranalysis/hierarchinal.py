@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 # 计算各点之间的距离
 def dist(x1, x2):
@@ -49,6 +49,8 @@ def hier(X, cluNum):
         for idx in range(len(clusters)):
             if clusters[idx] == y:
                 clusters[idx] = x
+            elif clusters[idx] > y:
+                clusters[idx] = clusters[idx] - 1
 
         # 更新簇之间的距离
         for i in range(q):
@@ -67,36 +69,11 @@ def hier(X, cluNum):
                     matrix[i, k] = distance
                     matrix[k, i] = distance
 
+    return clusters
+
 if __name__ == '__main__':
-    w = 3
-    matrix = np.array([
-        [3, 2, 3],
-        [3, 3, 3],
-        [3, 3, 3]
-    ])
-    # print(matrix)
-    # print(matrix.shape)
-    # minv = np.min(matrix)
-    # print(minv)
-    # coor = np.where(matrix == minv)
-    # x = coor[0][0]
-    # y = coor[1][0]
-    # print(x, y)
-    # print(type(y))
-    # matrix = np.delete(matrix, y, axis=1)
-    # matrix = np.delete(matrix, y, axis=0)
-    # print(matrix)
-    # print(type(int(y)))
-    # print(int(y))
-    # print(y)
-
-    a = np.array([0, 0])
-    b = np.array([1, 2])
-
-
-    if (a==b).all():
-        print("we")
-    else:
-        print("np")
-
-    print(dist(a, b))
+    data = pd.read_csv("data/iris.data.txt", names=["x1", "x2", "x3", "x4", "label"], header=None)
+    X = np.array(data.iloc[:, :4])
+    clusters = hier(X, cluNum=3)
+    plt.scatter(X[:, 0], X[:, 1], c = clusters)
+    plt.show()
