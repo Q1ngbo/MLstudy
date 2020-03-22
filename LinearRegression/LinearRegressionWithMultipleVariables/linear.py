@@ -46,6 +46,7 @@ def lineReg(X, y):
     return b, a
 
 # 最小二乘法正规方程求解Theta
+# X[x1,x2, ..., 1]
 #Theta = (X.T * X)^-1 * X.T * Y
 def normal_equation(X, y):
     former = np.linalg.inv(np.dot(X.T, X))
